@@ -20,7 +20,8 @@ from productos.views import InventarioProductos, InventarioProductosDetail, Inve
 from django.conf.urls.static import static
 from django.conf import settings
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
+from usuarios.throttling import ThrottledLoginView
 from usuarios.views import UsuarioViewSet
 from tienda.views import OrdenCompraViewSet, CarritoViewSet, ItemCarritoViewSet
 from rest_framework.routers import DefaultRouter
@@ -37,7 +38,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('admin/', admin.site.urls),
     path('', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/auth/login/', TokenObtainPairView.as_view(), name='login'),
+    path('api/auth/login/', ThrottledLoginView.as_view(), name='login'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='refresh token'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/productos/', InventarioProductos.as_view(), name='productos'),
