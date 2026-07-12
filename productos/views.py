@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import *
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from .utils.conversion import obtener_cambio
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser, IsAuthenticated
@@ -27,7 +27,10 @@ class InventarioProductos(APIView):
             dato = dato.filter(subcategoria__nombre__icontains=subcategoria)
 
         if precio:
-            dato = dato.filter(precio__icontains=precio)
+            try:
+                dato = dato.filter(precio=Decimal(precio))
+            except InvalidOperation:
+                pass
 
         paginator = PageNumberPagination()
         page = paginator.paginate_queryset(dato, request)
