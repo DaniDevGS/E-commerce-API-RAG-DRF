@@ -1,6 +1,9 @@
 import os
+import logging
 from upstash_vector import Index
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -8,7 +11,7 @@ url = os.getenv("UPSTASH_VECTOR_REST_URL", "").strip().replace('"', '').replace(
 token = os.getenv("UPSTASH_VECTOR_REST_TOKEN", "").strip().replace('"', '').replace("'", "")
 
 if not url or not token:
-    print("Advertencia: No se encontraron las credenciales de Upstash Vector en el entorno")
+    logger.info("Upstash Vector no configurado. El chatbot funcionara sin busqueda semantica.")
 
 index = Index(url=url, token=token)
 
@@ -45,5 +48,5 @@ def buscar_productos_similares(query, top_k=5):
         resultados = index.query(data=query, top_k=top_k, include_metadata=True, include_data=True)
         return resultados
     except Exception as e:
-        print(f"Error al consultar Upstash: {e}")
+        logger.warning("Error al consultar Upstash: %s", e)
         return []

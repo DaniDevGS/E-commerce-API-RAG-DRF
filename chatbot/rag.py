@@ -1,6 +1,10 @@
 import re
+import logging
 import httpx
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
+
 LLAMA_CPP = "llamacpp"
 GROQ = "groq"
 
@@ -12,7 +16,7 @@ def generar_respuesta(prompt: str, pregunta: str, n_predict: int = 384, temperat
         url = f"{settings.GROQ_API}v1/chat/completions"
         headers["Authorization"] = f"Bearer {settings.GROQ_API_KEY}"
     else:
-        url = f"{settings.LLAMACPP_API}veyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc0NzI1NDAxLCJpYXQiOjE3NzQ3MjE4MDEsImp0aSI6IjQwNTExOGJlOGE4MjQxMzg4N2YyMDFmODdhMDU3MjYyIiwidXNlcl9pZCI6IjEifQ.4mIDJFdt1qJ2mAbZ8Exwuk4psaRjwiEgpXpHwLFCTEQ1/chat/completions"
+        url = f"{settings.LLAMACPP_API}chat/completions"
     payload = {
         "model": "llama-3.1-8b-instant",
         "messages": [
@@ -24,9 +28,8 @@ def generar_respuesta(prompt: str, pregunta: str, n_predict: int = 384, temperat
         "stream": False,
         "stop": ["Usuario:", "Pregunta:"],
     }
-    print(headers)
+    logger.debug("Engine: %s, URL: %s", engine, url)
     with httpx.Client(timeout=900, headers=headers) as client:
-        print("haciendo peticion a: ", url)
         resp = client.post(url, json=payload)
         resp.raise_for_status()
         data = resp.json()

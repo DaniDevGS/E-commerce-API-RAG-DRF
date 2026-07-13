@@ -1,8 +1,11 @@
+import logging
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from chatbot.vectors import indexar_productos, index
+
+logger = logging.getLogger(__name__)
 
 # Create your models here.
 class BaseModel(models.Model):
@@ -59,11 +62,11 @@ def sincronizar_producto_con_upstash(sender, instance, **kwargs):
     try:
         indexar_productos([instance])
     except Exception as e:
-        print(f"Error sincronizando con Upstash: {e}")
+        logger.warning("Error sincronizando con Upstash: %s", e)
 
 @receiver(post_delete, sender=Producto)
 def eliminar_producto_de_upstash(sender, instance, **kwargs):
     try:
         index.delete(ids=[str(instance.id)])
     except Exception as e:
-        print(f"Error eliminando de Upstash: {e}")
+        logger.warning("Error eliminando de Upstash: %s", e)

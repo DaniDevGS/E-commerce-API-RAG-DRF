@@ -27,6 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_API = os.getenv("GROQ_API")
+LLAMACPP_API = os.getenv("LLAMACPP_API", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
@@ -160,6 +161,7 @@ REST_FRAMEWORK = {
         'login': '5/minute',
     },
 }
+
 TIME_ZONE = 'America/Caracas'
 USE_I18N = True 
 USE_L10N = True 
@@ -183,7 +185,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 if not DEBUG:
-    # Configuración de Producción
     STORAGES = {
         "default": {
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
