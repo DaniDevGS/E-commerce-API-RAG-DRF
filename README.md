@@ -7,22 +7,22 @@
 
 ![Swagger-UI](./Swagger%20UI%20portada.png)
 
-Ecommerce-API-RAG-DRF es un sistema backend robusto para eCommerce que integra un asistente virtual inteligente (Chatbot RAG) capaz de responder preguntas sobre el inventario en tiempo real utilizando búsqueda semántica y modelos de lenguaje grandes.
+Ecommerce-API-RAG-DRF is a robust backend system for eCommerce that integrates an intelligent virtual assistant (RAG Chatbot) capable of answering real-time inventory questions using semantic search and Large Language Models (LLMs).
 
-## Descripcion
+## Description
 
-Proyecto de finalizacion del curso de "Desarrollo de APIs con arquitectura de Microservicios". Demuestra dominio de Python, Django Rest Framework e integracion con modelos de IA (LLM) mediante RAG (Retrieval-Augmented Generation). El chatbot **Techty** usa busqueda semántica sobre una base de datos vectorial para dar respuestas contextuales sobre los productos de la tienda.
+Final project for the "API Development with Microservices Architecture" course. It demonstrates proficiency in Python, Django REST Framework, and AI model integration (LLM) via RAG (Retrieval-Augmented Generation). The chatbot **Techty** utilizes semantic search over a vector database to provide contextual responses about store products.
 
-### Caracteristicas principales
+### Key Features
 
-- **API REST** completa con autenticacion JWT
-- **Chatbot RAG** con busqueda semantica de productos
-- **Conversion de divisas** en tiempo real (USD -> VES)
-- **Carrito de compras** y sistema de ordenes
-- **Documentacion interactiva** con Swagger/Redoc
-- **Rate limiting** y throttling por endpoint
+- Full **REST API** with JWT authentication
+- **RAG Chatbot** featuring semantic product search
+- Real-time **currency conversion** (USD -> VES)
+- **Shopping cart** and order management system
+- **Interactive documentation** with Swagger/Redoc
+- **Rate limiting** and per-endpoint throttling
 
-## Arquitectura
+## Architecture
 
 ```mermaid
 graph TD
@@ -35,42 +35,42 @@ graph TD
     B --> B1[settings.py]
     B --> B2[urls.py]
 
-    C --> C1[Gestion de Productos/Categorias]
-    D --> D1[Carrito y Ordenes de Compra]
-    E --> E1[Gestion de Usuarios JWT]
-    F --> F1[Logica de IA y Vectores RAG]
+    C --> C1[Product/Category Management]
+    D --> D1[Cart and Purchase Orders]
+    E --> E1[JWT User Management]
+    F --> F1[AI Logic and RAG Vectors]
 
     F --> F2[Groq API / Llama.cpp]
     F --> F3[Upstash Vector DB]
 ```
 
-- **core/**: Configuracion central del proyecto Django
-- **productos/**: Modelos y vistas para el inventario, incluyen logica de conversion de divisas
-- **tienda/**: Gestion del flujo de compra (Carrito -> Orden -> Stock)
-- **usuarios/**: Autenticacion personalizada con SimpleJWT
-- **chatbot/**: Integracion con Groq/Llama.cpp y Upstash Vector para asistencia inteligente
+- **core/**: Central configuration for the Django project
+- **productos/**: Models and views for inventory, including currency conversion logic
+- **tienda/**: Management of the purchasing workflow (Cart -> Order -> Stock)
+- **usuarios/**: Custom authentication using SimpleJWT
+- **chatbot/**: Integration with Groq/Llama.cpp and Upstash Vector for intelligent assistance
 
-## Requisitos Previos
+## Prerequisites
 
-- **Python**: 3.10 o superior
-- **pip**: Ultima version
-- **Venv**: Recomendado para aislamiento de dependencias
+- **Python**: 3.10 or higher
+- **pip**: Latest version
+- **Venv**: Recommended for dependency isolation
 
-Opcionales:
-- **PostgreSQL** (si deseas usar en lugar de SQLite)
-- **Cuenta en [Groq](https://console.groq.com)** (gratis, para el LLM)
-- **Cuenta en [Upstash](https://console.upstash.com)** (gratis, para la base de datos vectorial)
+Optional:
+- **PostgreSQL** (if you prefer to use it instead of SQLite)
+- **[Groq Account](https://console.groq.com)** (free, for the LLM)
+- **[Upstash Account](https://console.upstash.com)** (free, for the vector database)
 
-## Instalacion
+## Installation
 
-### 1. Clonar el repositorio
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/DaniDevGS/Ecommerce-API-RAG-DRF.git
 cd Ecommerce-API-RAG-DRF
 ```
 
-### 2. Crear y activar entorno virtual
+### 2. Create and activate virtual environment
 
 ```bash
 python -m venv venv
@@ -82,170 +82,170 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### 3. Instalar dependencias
+### 3. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configurar variables de entorno
+### 4. Configure environment variables
 
-Copia el archivo de ejemplo y editalo con tus credenciales:
+Copy the example file and update it with your credentials:
 
 ```bash
 copy .env.example .env     # Windows
-cp .env.example .env       # Linux/Mac
+cp .env.example .env        # Linux/Mac
 ```
 
-Abre `.env` y configura al menos las variables minimas:
+Open `.env` and set at least the minimum required variables:
 
 ```bash
-SECRET_KEY=django-insecure-cambia-esta-clave
+SECRET_KEY=django-insecure-change-this-key
 DEBUG=True
 ```
 
-### 5. Ejecutar migraciones
+### 5. Run migrations
 
 ```bash
 python manage.py migrate
 ```
 
-### 6. Crear superusuario (opcional)
+### 6. Create superuser (optional)
 
 ```bash
 python manage.py createsuperuser
 ```
 
-### 7. Iniciar el servidor
+### 7. Start the server
 
 ```bash
 python manage.py runserver
 ```
 
-El servidor estara disponible en `http://127.0.0.1:8000/`
+The server will be available at `http://127.0.0.1:8000/`
 
-## Variables de Entorno
+## Environment Variables
 
-El proyecto funciona con **configuracion minima** (solo `SECRET_KEY` y `DEBUG`). Las variables adicionales habilitan funcionalidades extra.
+The project works with a **minimal configuration** (only `SECRET_KEY` and `DEBUG`). Additional variables enable extra features.
 
-### Requeridas
+### Required
 
-| Variable | Descripcion | Ejemplo |
+| Variable | Description | Example |
 | :--- | :--- | :--- |
-| `SECRET_KEY` | Llave secreta de Django | `django-insecure-tu-clave` |
-| `DEBUG` | Modo desarrollo | `True` |
+| `SECRET_KEY` | Django secret key | `django-insecure-your-key` |
+| `DEBUG` | Development mode | `True` |
 
-### LLM (Elige la que quieras)
+### LLM (Choose your preferred provider)
 
-| Variable | Descripcion | Donde obtenerla |
+| Variable | Description | Where to get it |
 | :--- | :--- | :--- |
-| `GROQ_API_KEY` | API Key de Groq (gratis) | [console.groq.com](https://console.groq.com) |
-| `GROQ_API` | Endpoint de Groq | `https://api.groq.com/openai/` |
-| `LLAMACPP_API` | Endpoint de Llama.cpp local | `http://localhost:8080/` |
+| `GROQ_API_KEY` | Groq API Key (free) | [console.groq.com](https://console.groq.com) |
+| `GROQ_API` | Groq Endpoint | `https://api.groq.com/openai/` |
+| `LLAMACPP_API` | Local Llama.cpp Endpoint | `http://localhost:8080/` |
 
-### Base de datos vectorial
+### Vector Database
 
-| Variable | Descripcion | Donde obtenerla |
+| Variable | Description | Where to get it |
 | :--- | :--- | :--- |
-| `UPSTASH_VECTOR_REST_URL` | URL de Upstash Vector | [console.upstash.com](https://console.upstash.com) |
-| `UPSTASH_VECTOR_REST_TOKEN` | Token de Upstash Vector | [console.upstash.com](https://console.upstash.com) |
+| `UPSTASH_VECTOR_REST_URL` | Upstash Vector URL | [console.upstash.com](https://console.upstash.com) |
+| `UPSTASH_VECTOR_REST_TOKEN` | Upstash Vector Token | [console.upstash.com](https://console.upstash.com) |
 
-### Base de datos SQL (Opcional)
+### SQL Database (Optional)
 
-| Variable | Descripcion | Ejemplo |
+| Variable | Description | Example |
 | :--- | :--- | :--- |
-| `DATABASE_URL` | URL de conexion PostgreSQL | `postgresql://user:pass@host:5432/db` |
+| `DATABASE_URL` | PostgreSQL connection URL | `postgresql://user:pass@host:5432/db` |
 
-### Configuracion minima vs completa
+### Minimal vs. Full Setup
 
-#### MINIMA - Solo API REST 
+#### MINIMAL - REST API Only
 
 ```bash
-SECRET_KEY=tu_clave_aqui
+SECRET_KEY=your_key_here
 DEBUG=True
 ```
 
-#### CON LLM - Chatbot responde pero sin contexto de productos
+#### WITH LLM - Chatbot responds without product context
 
 ```bash
-SECRET_KEY=tu_clave_aqui
+SECRET_KEY=your_key_here
 DEBUG=True
-GROQ_API_KEY=gsk_tu_key
+GROQ_API_KEY=gsk_your_key
 GROQ_API=https://api.groq.com/openai/
 ```
 
-#### COMPLETA - Chatbot con busqueda semantica de productos y funcionalidad de API REST
+#### FULL SETUP - Chatbot with semantic product search & REST API functionality
 
 ```bash
-SECRET_KEY=tu_clave_aqui
+SECRET_KEY=your_key_here
 DEBUG=True
-GROQ_API_KEY=gsk_tu_key
+GROQ_API_KEY=gsk_your_key
 GROQ_API=https://api.groq.com/openai/
-UPSTASH_VECTOR_REST_URL=https://tu-vector.upstash.io
-UPSTASH_VECTOR_REST_TOKEN=tu_token
+UPSTASH_VECTOR_REST_URL=https://your-vector.upstash.io
+UPSTASH_VECTOR_REST_TOKEN=your_token
 ```
 
-## Endpoints API
+## API Endpoints
 
-| Metodo | Endpoint | Auth | Descripcion |
+| Method | Endpoint | Auth | Description |
 | :--- | :--- | :---: | :--- |
-| `GET` | `/` | No | Swagger UI (documentacion interactiva) |
-| `POST` | `/api/auth/login/` | No | Login y obtener JWT |
-| `POST` | `/api/auth/refresh/` | No | Refrescar token JWT |
-| `POST` | `/api/usuario/` | No | Registrar usuario |
-| `GET` | `/api/usuario/` | Admin | Listar usuarios |
-| `GET` | `/api/productos/` | No | Listar/filtrar productos |
-| `GET` | `/api/productos/<id>/` | No | Detalle de producto |
-| `GET` | `/api/categorias/` | No | Listar categorias |
-| `GET` | `/api/subcategorias/` | No | Listar subcategorias |
-| `GET` | `/api/carritos/` | JWT | Ver mi carrito |
-| `POST` | `/api/items-carrito/` | JWT | Agregar item al carrito |
-| `PATCH` | `/api/items-carrito/<id>/` | JWT | Editar item del carrito |
-| `DELETE` | `/api/items-carrito/<id>/` | JWT | Eliminar item del carrito |
-| `POST` | `/api/ordenes-compra/` | JWT | Crear orden desde el carrito |
-| `GET` | `/api/ordenes-compra/` | JWT | Listar mis ordenes |
-| `POST` | `/api/chatbot/` | JWT | Preguntar al chatbot (RAG) |
-| `GET` | `/api/chatbot/` | JWT | Ver historial de chat |
+| `GET` | `/` | No | Swagger UI (interactive documentation) |
+| `POST` | `/api/auth/login/` | No | Login and obtain JWT |
+| `POST` | `/api/auth/refresh/` | No | Refresh JWT token |
+| `POST` | `/api/usuario/` | No | Register user |
+| `GET` | `/api/usuario/` | Admin | List users |
+| `GET` | `/api/productos/` | No | List/filter products |
+| `GET` | `/api/productos/<id>/` | No | Product details |
+| `GET` | `/api/categorias/` | No | List categories |
+| `GET` | `/api/subcategorias/` | No | List subcategories |
+| `GET` | `/api/carritos/` | JWT | View my cart |
+| `POST` | `/api/items-carrito/` | JWT | Add item to cart |
+| `PATCH` | `/api/items-carrito/<id>/` | JWT | Edit cart item |
+| `DELETE` | `/api/items-carrito/<id>/` | JWT | Delete cart item |
+| `POST` | `/api/ordenes-compra/` | JWT | Create order from cart |
+| `GET` | `/api/ordenes-compra/` | JWT | List my orders |
+| `POST` | `/api/chatbot/` | JWT | Query chatbot (RAG) |
+| `GET` | `/api/chatbot/` | JWT | View chat history |
 
-### Ejemplo: Login
+### Example: Login
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/auth/login/ \
   -H "Content-Type: application/json" \
-  -d '{"username": "tu_usuario", "password": "tu_password"}'
+  -d '{"username": "your_username", "password": "your_password"}'
 ```
 
-### Ejemplo: Preguntar al chatbot
+### Example: Querying the Chatbot
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/chatbot/ \
-  -H "Authorization: Bearer tu_token_jwt" \
+  -H "Authorization: Bearer your_jwt_token" \
   -H "Content-Type: application/json" \
-  -d '{"pregunta": "Que laptops tienen disponibles?"}'
+  -d '{"pregunta": "What laptops do you have available?"}'
 ```
 
-## Estructura del Proyecto
+## Project Structure
 
 ```
 backend/
-├── core/               # Configuracion Django (settings, urls, wsgi)
-├── productos/          # Modelos: Categoria, Subcategoria, Producto
-├── tienda/             # Modelos: Carrito, ItemCarrito, OrdenCompra
-├── usuarios/           # Gestion de usuarios con JWT
-├── chatbot/            # RAG: rag.py (LLM), vectors.py (Upstash)
-├── media/              # Archivos multimedia subidos
-├── requirements.txt    # Dependencias Python
-├── .env_example        # Template de variables de entorno
-└── manage.py           # Comandos de Django
+├── core/                # Django Configuration (settings, urls, wsgi)
+├── productos/          # Models: Category, Subcategory, Product
+├── tienda/              # Models: Cart, CartItem, PurchaseOrder
+├── usuarios/            # User Management with JWT
+├── chatbot/             # RAG: rag.py (LLM), vectors.py (Upstash)
+├── media/               # Uploaded media files
+├── requirements.txt    # Python Dependencies
+├── .env_example        # Environment variables template
+└── manage.py            # Django management commands
 ```
 
-## Tecnologias
+## Technologies
 
-| Componente | Tecnologia | Version |
+| Component | Technology | Version |
 | :--- | :--- | :--- |
 | Framework | Django | 5.2 |
-| API REST | Django REST Framework | 3.16 |
+| REST API | Django REST Framework | 3.16 |
 
-## Licencia
+## License
 
-Este proyecto esta bajo la licencia de **Uso Personal Unicamente**. No esta permitida la distribucion, venta o uso en entornos de produccion. Consulta el archivo [LICENSE](./LICENSE) para mas detalles.
+This project is licensed under **Personal Use Only**. Distribution, sale, or usage in production environments is strictly prohibited. Refer to the [LICENSE](./LICENSE) file for details.
